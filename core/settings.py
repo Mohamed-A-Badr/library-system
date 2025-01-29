@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     # 3rd party apps
     "rest_framework",
     "drf_spectacular",
+    # Local apps
+    "authors.apps.AuthorsConfig",
 ]
 
 MIDDLEWARE = [
