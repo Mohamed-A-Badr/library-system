@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     # Local apps
     "authors.apps.AuthorsConfig",
+    "books.apps.BooksConfig",
 ]
 
 MIDDLEWARE = [
