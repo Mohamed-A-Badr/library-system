@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+from books.models import Book
 
 
 class UserManager(BaseUserManager):
@@ -24,6 +25,9 @@ class UserManager(BaseUserManager):
 
 class CustomUser(AbstractUser, PermissionsMixin):
     email = models.EmailField(unique=True)
+    favorite_books = models.ManyToManyField(
+        Book, related_name="favorite_books", blank=True
+    )
 
     objects = UserManager()
 

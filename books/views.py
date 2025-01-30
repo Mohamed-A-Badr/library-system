@@ -1,7 +1,6 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter
-from rest_framework import generics, permissions
 from django.db.models import Q
-
+from drf_spectacular.utils import OpenApiParameter, extend_schema
+from rest_framework import generics, permissions
 
 from .models import Book
 from .serializers import BookSerializer

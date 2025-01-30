@@ -1,9 +1,9 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, permissions
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .models import CustomUser
 from .serializers import RegisterSerializer
-from drf_spectacular.utils import extend_schema
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 @extend_schema(
