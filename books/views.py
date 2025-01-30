@@ -13,6 +13,7 @@ from .serializers import BookSerializer
 class BookListView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 @extend_schema(
