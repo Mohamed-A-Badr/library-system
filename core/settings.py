@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Local apps
     "authors.apps.AuthorsConfig",
     "books.apps.BooksConfig",
+    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,5 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Simple Library APIs",
     "VERSION": "1.0.0",
 }
+
+AUTH_USER_MODEL = "accounts.CustomUser"
