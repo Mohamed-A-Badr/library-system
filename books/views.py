@@ -1,7 +1,8 @@
-from rest_framework import generics
-from .serializers import BookSerializer
-from .models import Book
 from drf_spectacular.utils import extend_schema
+from rest_framework import generics, permissions
+
+from .models import Book
+from .serializers import BookSerializer
 
 
 @extend_schema(
@@ -22,6 +23,7 @@ class BookListView(generics.ListCreateAPIView):
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     lookup_field = "pk"
 
 

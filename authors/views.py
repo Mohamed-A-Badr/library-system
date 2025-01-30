@@ -1,7 +1,8 @@
-from rest_framework import generics
-from .serializers import AuthorSerializer
-from .models import Author
 from drf_spectacular.utils import extend_schema
+from rest_framework import generics, permissions
+
+from .models import Author
+from .serializers import AuthorSerializer
 
 
 @extend_schema(
@@ -12,6 +13,7 @@ from drf_spectacular.utils import extend_schema
 class AuthorListView(generics.ListCreateAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 @extend_schema(
@@ -22,6 +24,7 @@ class AuthorListView(generics.ListCreateAPIView):
 class AuthorDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     lookup_field = "pk"
 
 
