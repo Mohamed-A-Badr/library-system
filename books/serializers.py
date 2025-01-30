@@ -3,9 +3,28 @@ from .models import Book
 
 
 class BookSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Book
-        fields = "__all__"
+        fields = (
+            "author_name",
+            "author",
+            "title",
+            "description",
+            "published_date",
+            "language",
+            "isbn",
+            "publisher",
+            "page_count",
+            "categories",
+            "created_at",
+            "updated_at",
+        )
+        extra_kwargs = {"author": {"write_only": True}}
+
+    def get_author_name(self, obj):
+        return obj.author.name
 
     def validate(self, attrs):
         isbn = attrs["isbn"]
