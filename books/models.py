@@ -30,7 +30,7 @@ class Book(models.Model):
         verbose_name = _("Book")
         verbose_name_plural = _("Books")
         ordering = ["-created_at"]
-        indexes = [models.Index(fields=["isbn"])]
+        indexes = [models.Index(fields=["isbn", "title"])]
 
     def __str__(self):
         return self.title

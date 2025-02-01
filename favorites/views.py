@@ -4,14 +4,17 @@ from rest_framework.response import Response
 
 from books.models import Book
 from books.serializers import BookSerializer
+from .recommendations import get_recommendations
+from .serializers import FavoriteBookSerializer
 
 # Create your views here.
 
 
 @extend_schema(
-    tags=["Recommendation"],
+    tags=["Favorite"],
 )
 class FavoriteBookView(generics.GenericAPIView):
+    serializer_class = FavoriteBookSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
@@ -34,7 +37,14 @@ class FavoriteBookView(generics.GenericAPIView):
             book = Book.objects.get(id=book_id)
             user.favorite_books.add(book)
             user.save()
-            return Response(status=status.HTTP_200_OK)
+            recommendations = get_recommendations(user.favorite_books.all())
+            return Response(
+                {
+                    "message": "Book added to favorites",
+                    "recommendations": BookSerializer(recommendations, many=True).data,
+                },
+                status=status.HTTP_200_OK,
+            )
         except Book.DoesNotExist:
             return Response(
                 {"message": "Book not found"}, status=status.HTTP_404_NOT_FOUND
@@ -47,7 +57,14 @@ class FavoriteBookView(generics.GenericAPIView):
             book = Book.objects.get(id=book_id)
             user.favorite_books.remove(book)
             user.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            recommendations = get_recommendations(user.favorite_books.all())
+            return Response(
+                {
+                    "message": "Book removed from favorites",
+                    "recommendations": BookSerializer(recommendations, many=True).data,
+                },
+                status=status.HTTP_200_OK,
+            )
         except Book.DoesNotExist:
             return Response(
                 {"message": "Book not found"}, status=status.HTTP_404_NOT_FOUND
